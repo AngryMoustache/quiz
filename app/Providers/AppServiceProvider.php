@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Site;
+use App;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,7 +12,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton('site', fn () => new Site());
+        $this->app->singleton('custom-auth', fn () => new App\Auth);
+        $this->app->singleton('site', fn () => new App\Site);
     }
 
     /**

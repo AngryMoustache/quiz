@@ -1,5 +1,6 @@
 <?php
 
+use App\Facades\Auth;
 use App\Facades\Site;
 use App\Http\Livewire\Admin;
 use App\Http\Livewire\Player;
@@ -13,6 +14,12 @@ if (Site::isPlayer()) {
 
 // Admin routes
 if (Site::isAdmin()) {
-    Route::get('/', Admin\Home::class)
-        ->name('admin.home');
+    if (Auth::current()) {
+        Route::redirect('/', '/dashboard')->name('admin.login');
+    } else {
+        Route::get('/', Admin\Login::class)->name('admin.login');
+    }
+
+    Route::get('/dashboard', Admin\Dashboard::class)
+        ->name('admin.dashboard');
 }
