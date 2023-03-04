@@ -1,21 +1,18 @@
 <?php
 
-use App\Http\Livewire;
+use App\Facades\Site;
+use App\Http\Livewire\Admin;
+use App\Http\Livewire\Player;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// Player routes
+if (Site::isPlayer()) {
+    Route::get('/', Player\Lounge::class)
+        ->name('player.lounge');
+}
 
-Route::get('/', Livewire\Home::class)
-    ->name('join.home');
-
-Route::get('/waiting-room/{game}', Livewire\WaitingRoom::class)
-    ->name('join.waiting-room');
+// Admin routes
+if (Site::isAdmin()) {
+    Route::get('/', Admin\Home::class)
+        ->name('admin.home');
+}
